@@ -20,8 +20,8 @@ struct DashboardView: View {
                 Color(.systemGray6).ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // HEADER
                     
+                    // HEADER
                     ZStack {
                         Text("Swift-GPT")
                             .font(.system(size: 18, weight: .bold, design: .serif))
@@ -39,35 +39,15 @@ struct DashboardView: View {
                             Spacer()
                         }
                     }.padding(.vertical, 8).padding(.horizontal, 14)
-                    
-                    if !isChatViewPresent {
-                        ScrollView {
-                            VStack(spacing: 16) {
-                                Image("gpt-logo")
-                                    .resizable()
-                                    .frame(width: 80, height: 80)
-                                
-                                VStack(spacing: 20) {
-                                    Text("Hello, \(sessionManager.userName)!\nI'm ready for help you")
-                                        .font(.system(size: 32, weight: .bold))
-                                        .multilineTextAlignment(.center)
-                                    
-                                    Text("Ask me anything what's are on your mind. Am here to assist you! ")
-                                        .font(.system(size: 16, weight: .regular))
-                                        .foregroundStyle(Color("gray"))
-                                        .multilineTextAlignment(.center)
-                                        .padding(.horizontal)
-                                }
-                            }
-                            .padding(.top, 14)
-                        }
-                    } else {
+
                         VStack {
                             ScrollViewReader { scrollProxy in
                                 ScrollView {
                                     LazyVStack(spacing: 8) {
                                         
-                                        ContentView()
+                                        if !viewModel.hasSentMessage {
+                                            ContentView() // Hiding some view, when chart starts
+                                        }
                                         
                                         ForEach(viewModel.messages) { message in
                                             HStack {
@@ -125,7 +105,7 @@ struct DashboardView: View {
                                 }.padding(.horizontal, 14).padding(.bottom, 14)
                             }
                         }
-                    }
+//                    }
                 }
             }
         }

@@ -10,6 +10,7 @@ import SwiftUI
 class ChatViewModel: ObservableObject {
     @Published var messages: [ChatMessage] = []
     @Published var inputText: String = ""
+    @Published var hasSentMessage: Bool = false
 
     private let apiKey = "AIzaSyAnogWJvFav8bJsweNCfmyTqWUFStDXxsQ"
 
@@ -19,6 +20,7 @@ class ChatViewModel: ObservableObject {
 
         let input = inputText
         inputText = ""
+        hasSentMessage = true
 
         callGeminiAPI(userInput: input)
     }

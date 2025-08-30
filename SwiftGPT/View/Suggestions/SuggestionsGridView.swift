@@ -28,13 +28,13 @@ struct SuggestionsGridView: View {
                         Button {
                             
                         } label: {
-                            VStack(alignment: .leading, spacing: 6) {
+                            VStack(alignment: .leading, spacing: 5) {
                                 Text(item.title)
-                                    .font(.system(size: 16, weight: .bold))
+                                    .font(.system(size: 14, weight: .bold))
                                     .foregroundStyle(.black)
                                 
                                 Text(item.description)
-                                    .font(.system(size: 14, weight: .regular))
+                                    .font(.system(size: 12, weight: .regular))
                                     .foregroundStyle(Color("gray"))
                             }.padding([.horizontal, .vertical], 8)
                         }
