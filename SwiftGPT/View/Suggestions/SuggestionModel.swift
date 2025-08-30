@@ -8,7 +8,6 @@
 import Foundation
 
 struct SuggestionModel: Hashable {
-//    let id: String
     let title: String
     let description: String
 }

@@ -14,7 +14,7 @@ struct DashboardView: View {
     
     @StateObject var viewModel = ChatViewModel()
     
-    var body: some View {   
+    var body: some View {
         NavigationStack {
             ZStack {
                 Color(.systemGray6).ignoresSafeArea()
@@ -39,73 +39,73 @@ struct DashboardView: View {
                             Spacer()
                         }
                     }.padding(.vertical, 8).padding(.horizontal, 14)
-
-                        VStack {
-                            ScrollViewReader { scrollProxy in
-                                ScrollView {
-                                    LazyVStack(spacing: 8) {
-                                        
-                                        if !viewModel.hasSentMessage {
-                                            ContentView() // Hiding some view, when chart starts
-                                        }
-                                        
-                                        ForEach(viewModel.messages) { message in
-                                            HStack {
-                                                if message.isUser {
-                                                    Spacer()
-                                                    Text(message.text)
-                                                        .padding()
-                                                        .background(Color.gray.opacity(0.2))
-                                                        .foregroundColor(.black)
-                                                        .cornerRadius(20)
-                                                        .frame(maxWidth: 250, alignment: .trailing)
-                                                } else {
-                                                    Text(message.text)
-                                                        .foregroundColor(.black)
-                                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                                    Spacer()
-                                                }
+                    
+                    VStack {
+                        ScrollViewReader { scrollProxy in
+                            ScrollView {
+                                LazyVStack(spacing: 8) {
+                                    
+                                    if !viewModel.hasSentMessage {
+                                        ContentView()
+                                    }
+                                    
+                                    ForEach(viewModel.messages) { message in
+                                        HStack {
+                                            if message.isUser {
+                                                Spacer()
+                                                Text(message.text)
+                                                    .padding()
+                                                    .background(Color.gray.opacity(0.2))
+                                                    .foregroundColor(.black)
+                                                    .cornerRadius(20)
+                                                    .frame(maxWidth: 250, alignment: .trailing)
+                                            } else {
+                                                Text(message.text)
+                                                    .foregroundColor(.black)
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                    .padding(.trailing, 60)
+                                                Spacer()
                                             }
-                                            .padding(.horizontal, 14)
                                         }
-                                    }
-                                    .padding(.vertical)
-                                }
-                                .onChange(of: viewModel.messages.count) { _ in
-                                    withAnimation {
-                                        scrollProxy.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                                        .padding(.horizontal, 14)
                                     }
                                 }
+                                .padding(.vertical)
                             }
-                            
-                            VStack(spacing: 14) {
-                                SuggestionsGridView()
-                                
-                                HStack(spacing: 10) {
-                                    ZStack {
-                                        TextField(text: $viewModel.inputText) {
-                                            Text("Ask me anything...")
-                                        }
-                                        .padding(.horizontal)
-                                        .keyboardType(.default)
-                                    }
-                                    .frame(height: 56)
-                                    .background(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: 26))
-                                    
-                                    Button {
-                                        viewModel.sendMessage()
-                                    } label: {
-                                        Image(systemName: "paperplane.circle.fill")
-                                            .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .foregroundStyle(Color("primary"))
-                                    }.disabled(viewModel.inputText.isEmpty)
-                                    
-                                }.padding(.horizontal, 14).padding(.bottom, 14)
+                            .onChange(of: viewModel.messages.count) { _ in
+                                withAnimation {
+                                    scrollProxy.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                                }
                             }
                         }
-//                    }
+                        
+                        VStack(spacing: 14) {
+                            SuggestionsGridView()
+                            
+                            HStack(spacing: 10) {
+                                ZStack {
+                                    TextField(text: $viewModel.inputText) {
+                                        Text("Ask me anything...")
+                                    }
+                                    .padding(.horizontal)
+                                    .keyboardType(.default)
+                                }
+                                .frame(height: 56)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 26))
+                                
+                                Button {
+                                    viewModel.sendMessage()
+                                } label: {
+                                    Image(systemName: "paperplane.circle.fill")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundStyle(Color("primary"))
+                                }.disabled(viewModel.inputText.isEmpty)
+                                
+                            }.padding(.horizontal, 14).padding(.bottom, 14)
+                        }
+                    }
                 }
             }
         }
